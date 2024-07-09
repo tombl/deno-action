@@ -28,7 +28,7 @@ module.exports = (file) => {
 $ErrorActionPreference = "Stop"
 
 $cache = "$env:RUNNER_TOOL_CACHE\\deno-action\\${DENO_VERSION}\\${process.arch}"
-New-Item -ItemType Directory -Force -Path $cache
+$null = New-Item -ItemType Directory -Force -Path $cache
 $zip = "$env:RUNNER_TEMP\\deno-${DENO_VERSION}.zip"
 
 $target = "x86_64-pc-windows-msvc"
@@ -39,7 +39,7 @@ if (-not (Test-Path -Path "$cache.complete")) {
   curl.exe -L --progress-bar $url -o $zip
   tar.exe -xf $zip -C $cache
   Remove-Item -Force $zip
-  New-Item -ItemType File -Force -Path "$cache.complete"
+  $null = New-Item -ItemType File -Force -Path "$cache.complete"
 }
 
 $env:DENO_DIR = "$env:RUNNER_TEMP\\.deno"
