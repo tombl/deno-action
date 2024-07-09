@@ -1,1 +1,1 @@
-require("./run.cjs")("main");
+require("./run.cjs")(require.resolve("./main.ts"));

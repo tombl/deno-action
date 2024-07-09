@@ -1,1 +1,1 @@
-require("./run.cjs")("pre");
+require("./run.cjs")(require.resolve("./pre.ts"));

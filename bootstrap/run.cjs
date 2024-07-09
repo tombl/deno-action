@@ -17,7 +17,7 @@ if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
 }
 
-module.exports = (task) => {
+module.exports = (file) => {
   const [command, ...args] = process.platform === "win32"
     ? [
       "powershell",
@@ -40,7 +40,7 @@ if (-not (Test-Path -Path "$cache.complete")) {
   New-Item -ItemType File -Force -Path "$cache.complete"
 }
 
-& "$cache\\deno.exe" task --quiet ${task}
+& "$cache\\deno.exe" run --allow-all '${file}'
 exit $LastExitCode
     `,
     ]
@@ -72,7 +72,7 @@ if [ ! -f "$cache.complete" ]; then
 fi
 
 chmod +x "$cache/deno"
-exec "$cache/deno" task --quiet ${task}
+exec "$cache/deno" run --allow-all '${file}'
     `,
     ];
 

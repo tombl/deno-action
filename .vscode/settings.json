@@ -1,4 +1,7 @@
 {
   "deno.enable": true,
-  "deno.disablePaths": ["bootstrap"] 
+  "deno.disablePaths": ["bootstrap/*.cjs"],
+  "[javascript][typescript][json][jsonc]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  }
 }

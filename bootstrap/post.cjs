@@ -1,1 +1,1 @@
-require("./run.cjs")("post");
+require("./run.cjs")(require.resolve("./post.ts"));
