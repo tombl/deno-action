@@ -1,1 +1,1 @@
-require("./run")("main");
+require("./run.cjs")("main");

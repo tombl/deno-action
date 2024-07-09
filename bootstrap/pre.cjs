@@ -1,1 +1,1 @@
-require("./run")("pre");
+require("./run.cjs")("pre");

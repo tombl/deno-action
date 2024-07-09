@@ -1,1 +1,1 @@
-require("./run")("post");
+require("./run.cjs")("post");
