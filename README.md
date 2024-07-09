@@ -7,12 +7,10 @@ A minimal and more secure alternative to
 
 ## Why?
 
-The current state of Actions is a security nightmare. Almost every custom
-JavaScript action either pushes their `node_modules` or their bundled code
+The current Actions ecosystem is a supply chain attack waiting to happen. Almost
+every custom JavaScript action pushes their `node_modules` or their bundled code
 straight to their repo.
-[This practice is even endorsed by GitHub](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github).
-Unless you're pinning and vetting every action you depend on, you could be
-vulnerable to a supply chain attack.
+[This practice is even recommended by GitHub](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github).
 
 Because Deno fetches dependencies on-demand and directly executes TypeScript, it
 sidesteps this problem entirely.
@@ -23,13 +21,14 @@ In the bootstrap directory, you'll find a ~100 line script that will download,
 cache, and execute Deno.
 
 [Use this repo as a template](https://github.com/new?template_name=deno-action&template_owner=tombl)
-to create your own GitHub Actions.
+to create your own GitHub Actions, and you'll be able to use Deno instead of
+Node.
 
 ## Limitations
 
-By fetching dependencies on-demand, the first execution of your action will be
-slightly slower than if you bundled them into the action. However, this is
-mostly balanced out by the fact that there's less of your action to clone.
+By fetching dependencies on-demand instead of bundling them, the first execution
+of your action will be slightly slower. However, this is mostly balanced out
+because there's less of your action to clone.
 
 Also, Deno only currently supports the following platforms:
 
