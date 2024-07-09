@@ -9,10 +9,14 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test local action
+        uses: ./
         id: sleep
         with:
           milliseconds: 500
-      - name: Read time
+
+      - name: Print output
         run: echo "Slept until ${{ steps.sleep.outputs.time }}"
