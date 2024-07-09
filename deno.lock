@@ -1,0 +1,48 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "npm:@actions/core@^1.10.1": "npm:@actions/core@1.10.1"
+    },
+    "npm": {
+      "@actions/core@1.10.1": {
+        "integrity": "sha512-3lBR9EDAY+iYIpTnTIXmWcNbX3T2kCkAEQGIQx4NVQ0575nk2k3GRZDTPQG+vVtS2izSLmINlxXf0uLtnrTP+g==",
+        "dependencies": {
+          "@actions/http-client": "@actions/http-client@2.2.1",
+          "uuid": "uuid@8.3.2"
+        }
+      },
+      "@actions/http-client@2.2.1": {
+        "integrity": "sha512-KhC/cZsq7f8I4LfZSJKgCvEwfkE8o1538VoBeoGzokVLLnbFDEAdFD3UhoMklxo2un9NJVBdANOresx7vTHlHw==",
+        "dependencies": {
+          "tunnel": "tunnel@0.0.6",
+          "undici": "undici@5.28.3"
+        }
+      },
+      "@fastify/busboy@2.1.0": {
+        "integrity": "sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==",
+        "dependencies": {}
+      },
+      "tunnel@0.0.6": {
+        "integrity": "sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==",
+        "dependencies": {}
+      },
+      "undici@5.28.3": {
+        "integrity": "sha512-3ItfzbrhDlINjaP0duwnNsKpDQk3acHI3gVJ1z4fmwMK31k5G9OVIAMLSIaP6w4FaGkaAkN6zaQO9LUvZ1t7VA==",
+        "dependencies": {
+          "@fastify/busboy": "@fastify/busboy@2.1.0"
+        }
+      },
+      "uuid@8.3.2": {
+        "integrity": "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==",
+        "dependencies": {}
+      }
+    }
+  },
+  "remote": {},
+  "workspace": {
+    "dependencies": [
+      "npm:@actions/core@^1.10.1"
+    ]
+  }
+}
