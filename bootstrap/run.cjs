@@ -36,7 +36,7 @@ $url = "https://github.com/denoland/deno/releases/download/v1.44.4/deno-$target.
 
 if (-not (Test-Path -Path "$cache.complete")) {
   echo "Downloading Deno..."
-  curl.exe -L --progress-bar $url -o $zip
+  curl.exe -L $url -o $zip
   tar.exe -xf $zip -C $cache
   Remove-Item -Force $zip
   $null = New-Item -ItemType File -Force -Path "$cache.complete"
@@ -69,7 +69,7 @@ url="https://github.com/denoland/deno/releases/download/${DENO_VERSION}/deno-\${
 
 if [ ! -f "$cache.complete" ]; then
   echo "Downloading Deno..."
-  curl --fail --location --progress-bar "$url" --output "$zip"
+  curl --fail --location "$url" --output "$zip"
   unzip -q -o -d "$cache" "$zip"
   rm -f "$zip"
   touch "$cache.complete"
