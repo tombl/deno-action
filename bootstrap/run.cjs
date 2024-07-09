@@ -1,7 +1,7 @@
 // Copyright 2024 tombl              All rights reserved. MIT license.
 // Copyright 2019 the Deno authors.  All rights reserved. MIT license.
 
-// From https://github.com/tomblcode/deno-action
+// From https://github.com/tombl/deno-action
 
 // Based on https://github.com/denoland/deno_install
 //          https://github.com/denoland/setup-deno
