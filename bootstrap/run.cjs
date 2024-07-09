@@ -13,6 +13,10 @@ const { spawnSync } = require("child_process");
 
 const DENO_VERSION = "v1.44.4";
 
+if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
+  throw new Error("This file must be run in a GitHub Actions environment.");
+}
+
 module.exports = (task) => {
   const [command, ...args] = process.platform === "win32"
     ? [
