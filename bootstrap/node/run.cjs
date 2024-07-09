@@ -17,6 +17,8 @@ if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
 }
 
+Object.assign(process.env, {});
+
 module.exports = (file) => {
   const [command, ...args] = process.platform === "win32"
     ? [
@@ -39,6 +41,8 @@ if (-not (Test-Path -Path "$cache.complete")) {
   Remove-Item -Force $zip
   New-Item -ItemType File -Force -Path "$cache.complete"
 }
+
+$env:DENO_DIR = "$env:RUNNER_TEMP\\.deno"
 
 & "$cache\\deno.exe" run --allow-all '${file}'
 exit $LastExitCode
@@ -70,6 +74,8 @@ if [ ! -f "$cache.complete" ]; then
   rm -f "$zip"
   touch "$cache.complete"
 fi
+
+export DENO_DIR="$RUNNER_TEMP/.deno"
 
 chmod +x "$cache/deno"
 exec "$cache/deno" run --allow-all '${file}'
