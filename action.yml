@@ -20,6 +20,6 @@ outputs:
 
 runs:
   using: node20
-  pre: _bootstrap.cjs
-  main: _bootstrap.cjs
-  post: _bootstrap.cjs
+  pre: bootstrap/pre.cjs
+  main: bootstrap/main.cjs
+  post: bootstrap/post.cjs
