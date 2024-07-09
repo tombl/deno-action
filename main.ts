@@ -1,7 +1,5 @@
 import * as core from "@actions/core";
 
-console.log(Deno.env.toObject());
-
 try {
   const ms: string = core.getInput("milliseconds");
 
