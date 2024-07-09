@@ -44,7 +44,7 @@ if (-not (Test-Path -Path "$cache.complete")) {
 
 $env:DENO_DIR = "$env:RUNNER_TEMP\\.deno"
 
-& "$cache\\deno.exe" run --allow-all '${file}'
+& "$cache\\deno.exe" run --quiet --no-prompt --allow-all '${file}'
 exit $LastExitCode
     `,
     ]
@@ -78,7 +78,7 @@ fi
 export DENO_DIR="$RUNNER_TEMP/.deno"
 
 chmod +x "$cache/deno"
-exec "$cache/deno" run --allow-all '${file}'
+exec "$cache/deno" run --quiet --no-prompt --allow-all '${file}'
     `,
     ];
 
