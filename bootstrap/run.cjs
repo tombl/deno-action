@@ -17,8 +17,6 @@ if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
 }
 
-Object.assign(process.env, {});
-
 module.exports = (file) => {
   const [command, ...args] = process.platform === "win32"
     ? [
