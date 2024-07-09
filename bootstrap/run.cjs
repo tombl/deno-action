@@ -12,13 +12,17 @@
 const { spawnSync } = require("child_process");
 
 const DENO_VERSION = "v1.44.4";
-const DENO_ARGS = "--allow-all ./main.ts";
 
-const [command, ...args] = process.platform === "win32"
-  ? [
-    "powershell",
-    "-Command",
-    ` 
+if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
+  throw new Error("This file must be run in a GitHub Actions environment.");
+}
+
+module.exports = (task) => {
+  const [command, ...args] = process.platform === "win32"
+    ? [
+      "powershell",
+      "-Command",
+      `
 $ErrorActionPreference = "Stop"
 
 $cache = "$env:RUNNER_TOOL_CACHE\\deno-action\\${DENO_VERSION}\\${process.arch}"
@@ -36,14 +40,14 @@ if (-not (Test-Path -Path "$cache.complete")) {
   New-Item -ItemType File -Force -Path "$cache.complete"
 }
 
-& "$cache\\deno.exe" run ${DENO_ARGS}
+& "$cache\\deno.exe" task --quiet ${task}
 exit $LastExitCode
     `,
-  ]
-  : [
-    "sh",
-    "-c",
-    `
+    ]
+    : [
+      "sh",
+      "-c",
+      `
 set -e
 
 cache="$RUNNER_TOOL_CACHE/deno-action/${DENO_VERSION}/${process.arch}"
@@ -68,10 +72,11 @@ if [ ! -f "$cache.complete" ]; then
 fi
 
 chmod +x "$cache/deno"
-exec "$cache/deno" run ${DENO_ARGS}
+exec "$cache/deno" task --quiet ${task}
     `,
-  ];
+    ];
 
-const child = spawnSync(command, args, { stdio: "inherit" });
-if (child.error) throw child.error;
-process.exitCode = child.status;
+  const child = spawnSync(command, args, { stdio: "inherit" });
+  if (child.error) throw child.error;
+  process.exitCode = child.status;
+};
