@@ -17,7 +17,7 @@ sidesteps this problem entirely.
 
 ## How?
 
-In the bootstrap directory, you'll find a ~100 line script that will download,
+In the bootstrap directory, you'll find a small script that will download,
 cache, and execute Deno.
 
 [Use this repo as a template](https://github.com/new?template_name=deno-action&template_owner=tombl)
