@@ -30,8 +30,8 @@ zip="$RUNNER_TEMP/deno-${DENO_VERSION}.zip"
 echo $(uname -sm) $RUNNER_OS
 
 case $RUNNER_OS-$(uname -m); in
-Windows-x86_64) target="x86_64-pc-windows-msvc";;
-Darwin-x86_64)  target="x86_64-apple-darwin";;
+Windows-x86_64) target="x86_64-pc-windows-msvc" ;;
+Darwin-x86_64)  target="x86_64-apple-darwin" ;;
 Darwin-arm64)   target="aarch64-apple-darwin" ;;
 Linux-aarch64)  target="aarch64-unknown-linux-gnu" ;;
 Linux-x86_64)   target="x86_64-unknown-linux-gnu" ;;
