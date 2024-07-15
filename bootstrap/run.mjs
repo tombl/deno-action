@@ -9,9 +9,7 @@
 
 // Keep this easily auditable, with no external dependencies.
 
-const { spawnSync } = require("child_process");
-
-const DENO_VERSION = "v1.44.4";
+import { spawnSync } from "node:child_process";
 
 if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
@@ -30,22 +28,25 @@ const OS = {
 if (!ARCH) throw new Error(`Unsupported architecture: ${process.arch}`);
 if (!OS) throw new Error(`Unsupported OS: ${process.platform}`);
 
-const URL =
-  `https://github.com/denoland/deno/releases/download/${DENO_VERSION}/deno-${ARCH}-${OS}.zip`;
+const versions = await (await fetch("https://deno.com/versions.json")).json();
+const version = versions.cli.find((v) => v.startsWith("v1."));
 
-module.exports = (file) => {
+const url =
+  `https://github.com/denoland/deno/releases/download/${version}/deno-${ARCH}-${OS}.zip`;
+
+export default function run(file) {
   const child = spawnSync("bash", [
     "-c",
     `
 set -e
 
-cache="$RUNNER_TOOL_CACHE/deno-action/${DENO_VERSION}/${process.arch}"
+cache="$RUNNER_TOOL_CACHE/deno-action/${version}/${process.arch}"
 mkdir -p "$cache"
-zip="$RUNNER_TEMP/deno-${DENO_VERSION}.zip"
+zip="$RUNNER_TEMP/deno-${version}.zip"
 
 if [ ! -f "$cache.complete" ]; then
   echo "Downloading Deno..."
-  curl --silent --fail --location '${URL}' --output "$zip"
+  curl --silent --fail --location '${url}' --output "$zip"
   unzip -q -o -d "$cache" "$zip"
   rm -f "$zip"
   touch "$cache.complete"
@@ -59,4 +60,4 @@ exec "$cache/deno" run --quiet --no-prompt --allow-all '${file}'
   ], { stdio: "inherit" });
   if (child.error) throw child.error;
   process.exitCode = child.status;
-};
+}
