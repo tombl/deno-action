@@ -37,7 +37,7 @@ module.exports = (file) => {
   const child = spawnSync("bash", [
     "-c",
     `
-set -ex
+set -e
 
 cache="$RUNNER_TOOL_CACHE/deno-action/${DENO_VERSION}/${process.arch}"
 mkdir -p "$cache"
