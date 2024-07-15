@@ -21,11 +21,13 @@ module.exports = (file) => {
   const child = spawnSync("bash", [
     "-c",
     `
-set -e
+set -ex
 
 cache="$RUNNER_TOOL_CACHE/deno-action/${DENO_VERSION}/${process.arch}"
 mkdir -p "$cache"
 zip="$RUNNER_TEMP/deno-${DENO_VERSION}.zip"
+
+echo $(uname -sm) $RUNNER_OS
 
 case $RUNNER_OS-$(uname -m); in
 Windows-x86_64) target="x86_64-pc-windows-msvc";;
