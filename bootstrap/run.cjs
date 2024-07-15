@@ -17,6 +17,22 @@ if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
 }
 
+const ARCH = {
+  arm64: "aarch64",
+  x64: "x86_64",
+}[process.arch];
+const OS = {
+  win32: "pc-windows-msvc",
+  darwin: "apple-darwin",
+  linux: "unknown-linux-gnu",
+}[process.platform];
+
+if (!ARCH) throw new Error(`Unsupported architecture: ${process.arch}`);
+if (!OS) throw new Error(`Unsupported OS: ${process.platform}`);
+
+const URL =
+  `https://github.com/denoland/deno/releases/download/${DENO_VERSION}/deno-${ARCH}-${OS}.zip`;
+
 module.exports = (file) => {
   const child = spawnSync("bash", [
     "-c",
@@ -27,22 +43,9 @@ cache="$RUNNER_TOOL_CACHE/deno-action/${DENO_VERSION}/${process.arch}"
 mkdir -p "$cache"
 zip="$RUNNER_TEMP/deno-${DENO_VERSION}.zip"
 
-echo $(uname -sm) $RUNNER_OS
-
-case $RUNNER_OS-$(uname -m); in
-Windows-x86_64) target="x86_64-pc-windows-msvc" ;;
-Darwin-x86_64)  target="x86_64-apple-darwin" ;;
-Darwin-arm64)   target="aarch64-apple-darwin" ;;
-Linux-aarch64)  target="aarch64-unknown-linux-gnu" ;;
-Linux-x86_64)   target="x86_64-unknown-linux-gnu" ;;
-*) echo "Unsupported os/architecture"; exit 1 ;;
-esac
-
-url="https://github.com/denoland/deno/releases/download/${DENO_VERSION}/deno-\${target}.zip"
-
 if [ ! -f "$cache.complete" ]; then
   echo "Downloading Deno..."
-  curl --silent --fail --location "$url" --output "$zip"
+  curl --silent --fail --location '${URL}' --output "$zip"
   unzip -q -o -d "$cache" "$zip"
   rm -f "$zip"
   touch "$cache.complete"
