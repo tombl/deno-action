@@ -10,6 +10,8 @@
 // Keep this easily auditable, with no external dependencies.
 
 import { spawnSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
@@ -28,7 +30,19 @@ const OS = {
 if (!ARCH) throw new Error(`Unsupported architecture: ${process.arch}`);
 if (!OS) throw new Error(`Unsupported OS: ${process.platform}`);
 
-const versions = await (await fetch("https://deno.com/versions.json")).json();
+const VERSION_CACHE = join(
+  process.env.RUNNER_TEMP,
+  "deno-action-versions.json",
+);
+
+let versions;
+try {
+  versions = JSON.parse(readFileSync(VERSION_CACHE, "utf-8"));
+} catch {
+  versions = await (await fetch("https://deno.com/versions.json")).json();
+  writeFileSync(VERSION_CACHE, JSON.stringify(versions));
+}
+
 const version = versions.cli.find((v) => v.startsWith("v1."));
 
 const url =
