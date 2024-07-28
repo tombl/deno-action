@@ -18,5 +18,8 @@ jobs:
         with:
           milliseconds: 500
 
+      - name: Test local action again
+        uses: ./
+
       - name: Print output
         run: echo "Slept until ${{ steps.sleep.outputs.time }}"
