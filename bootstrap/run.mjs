@@ -65,7 +65,7 @@ mkdir -p "$cache"
 zip="$RUNNER_TEMP/deno-${version}.zip"
 
 if [ ! -f "$cache.complete" ]; then
-  echo "::debug::Downloading Deno"
+  echo "::debug::Downloading Deno ${version}"
   curl --silent --fail --location '${url}' --output "$zip"
   unzip -q -o -d "$cache" "$zip"
   rm -f "$zip"
