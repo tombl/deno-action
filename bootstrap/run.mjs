@@ -44,7 +44,12 @@ try {
   writeFileSync(VERSION_CACHE, JSON.stringify(versions));
 }
 
-const version = versions.cli.find((v) => v.startsWith("v1."));
+// Versions are ordered from newest to oldest.
+// Pick the newest major compatible version,
+// excluding suffixed versions e.g. release candidates.
+const version = versions.cli.find((v) =>
+  v.startsWith("v1.") && !v.includes("-")
+);
 
 const url =
   `https://github.com/denoland/deno/releases/download/${version}/deno-${ARCH}-${OS}.zip`;
