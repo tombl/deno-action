@@ -12,6 +12,7 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import process from "node:process";
 
 if (!process.env.RUNNER_TOOL_CACHE || !process.env.RUNNER_TEMP) {
   throw new Error("This file must be run in a GitHub Actions environment.");
