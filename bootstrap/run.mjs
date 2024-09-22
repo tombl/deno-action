@@ -44,7 +44,12 @@ try {
   writeFileSync(VERSION_CACHE, JSON.stringify(versions));
 }
 
-const version = versions.cli.find((v) => v.startsWith("v1."));
+// Versions are ordered from newest to oldest.
+// Pick the newest major compatible version,
+// excluding suffixed versions e.g. release candidates.
+const version = versions.cli.find((v) =>
+  v.startsWith("v1.") && !v.includes("-")
+);
 
 const url =
   `https://github.com/denoland/deno/releases/download/${version}/deno-${ARCH}-${OS}.zip`;
@@ -60,7 +65,7 @@ mkdir -p "$cache"
 zip="$RUNNER_TEMP/deno-${version}.zip"
 
 if [ ! -f "$cache.complete" ]; then
-  echo "::debug::Downloading Deno"
+  echo "::debug::Downloading Deno ${version}"
   curl --silent --fail --location '${url}' --output "$zip"
   unzip -q -o -d "$cache" "$zip"
   rm -f "$zip"
