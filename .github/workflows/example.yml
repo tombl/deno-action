@@ -8,6 +8,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    if: github.repository == 'tombl/deno-action'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
