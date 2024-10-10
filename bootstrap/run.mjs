@@ -48,7 +48,7 @@ try {
 // Pick the newest major compatible version,
 // excluding suffixed versions e.g. release candidates.
 const version = versions.cli.find((v) =>
-  v.startsWith("v1.") && !v.includes("-")
+  v.startsWith("v2.") && !v.includes("-")
 );
 
 const url = `https://dl.deno.land/release/${version}/deno-${ARCH}-${OS}.zip`;
