@@ -51,7 +51,8 @@ const version = versions.cli.find((v) =>
   v.startsWith("v2.") && !v.includes("-")
 );
 
-const url = `https://dl.deno.land/release/${version}/deno-${ARCH}-${OS}.zip`;
+const url =
+  `https://github.com/denoland/deno/releases/download/${version}/deno-${ARCH}-${OS}.zip`;
 
 export default function run(file) {
   const child = spawnSync("bash", [
